@@ -2,6 +2,8 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+import FoodContainer from './containers/food-list';
+
 function App() {
   return (
     <div className="App">
@@ -19,6 +21,10 @@ function App() {
           Learn React
         </a>
       </header>
+      <h2>List of foods: </h2>
+      <FoodContainer />
+      <hr />
+      <h2>Food details: </h2>
     </div>
   );
 }

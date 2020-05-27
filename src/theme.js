@@ -27,7 +27,7 @@ const theme = {
     primaryText: "rgba(0,0,0,.65)",
     secondaryText: "rgba(0,0,0,.45)",
     disable: "rgba(0,0,0,.25)",
-    error: "#A61D24",
+    error: "#F5222D",
     boxShadow: "0 18px 24px rgba(0,0,0,.25)",
     facebook: "#395185"
   }
