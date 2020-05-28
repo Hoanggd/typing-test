@@ -1,3 +1,6 @@
+import React from "react";
+import { ThemeProvider } from "styled-components/macro";
+
 const theme = {
   dark: {
     primary: "#1765AD",
@@ -13,7 +16,7 @@ const theme = {
     disable: "rgba(255,255,255,.3)",
     error: "#A61D24",
     boxShadow: "0 18px 24px rgba(0,0,0,.25)",
-    facebook: "#395185"
+    facebook: "#395185",
   },
   light: {
     primary: "#1890FF",
@@ -29,8 +32,12 @@ const theme = {
     disable: "rgba(0,0,0,.25)",
     error: "#F5222D",
     boxShadow: "0 18px 24px rgba(0,0,0,.25)",
-    facebook: "#395185"
-  }
-}
+    facebook: "#395185",
+  },
+};
 
-export default theme
+const Theme = ({ children }) => (
+  <ThemeProvider theme={theme.dark}>{children}</ThemeProvider>
+);
+
+export default Theme;
