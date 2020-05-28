@@ -1,5 +1,6 @@
 import React from "react";
 import { ThemeProvider } from "styled-components/macro";
+import { useSelector } from "react-redux";
 
 const theme = {
   dark: {
@@ -7,7 +8,7 @@ const theme = {
     primaryLighten: "#3C9AE8",
     secondary: "#D8BD14",
     background: "#141515",
-    devider: "#1C1F22",
+    divider: "#1C1F22",
     modal: "#282E34",
     border: "#3E4955",
     title: "rgba(255,255,255,.85)",
@@ -23,7 +24,7 @@ const theme = {
     primaryLighten: "#1890FF",
     secondary: "#FADB14",
     background: "#fff",
-    devider: "#f5f5f5",
+    divider: "#f5f5f5",
     modal: "#fff",
     border: "#DEDEDE",
     title: "rgba(0,0,0,.85)",
@@ -36,8 +37,13 @@ const theme = {
   },
 };
 
-const Theme = ({ children }) => (
-  <ThemeProvider theme={theme.dark}>{children}</ThemeProvider>
-);
+const Theme = ({ children }) => {
+  const darkMode = useSelector((state) => state.darkMode);
+  return (
+    <ThemeProvider theme={theme[darkMode ? "dark" : "light"]}>
+      {children}
+    </ThemeProvider>
+  );
+};
 
 export default Theme;

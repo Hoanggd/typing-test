@@ -1,14 +1,20 @@
-import React from 'react';
+import React from "react";
+import styled from "styled-components/macro";
 
-import Home from 'features/Home';
-import Theme from 'Theme';
+import Home from "features/Home";
+import Theme from "Theme";
 
-function App() {
+function App(props) {
+  const { className } = props;
   return (
     <Theme>
-      <Home />
+      <div className={className} >
+        <Home />
+      </div>
     </Theme>
   );
 }
 
-export default App;
+export default styled(App)`
+  
+`;

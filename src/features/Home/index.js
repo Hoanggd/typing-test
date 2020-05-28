@@ -7,7 +7,6 @@ const Home = ({ className }) => {
   return (
     <div className={className}>
       <Nav />
-      
     </div>
   );
 };
