@@ -1,6 +1,8 @@
 import { combineReducers } from "redux";
-import darkModeSlice from 'features/Home/darkModeSlice'
+import darkModeSlice from 'features/Home/darkModeSlice';
+import sentenceSlice from 'features/Home/sentenceSlice';
 
 export default combineReducers({
-  darkMode: darkModeSlice
+  darkMode: darkModeSlice,
+  sentence: sentenceSlice
 })

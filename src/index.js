@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import "assets/style/index.css";
 import "normalize.css";
+import "assets/style/index.css";
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";

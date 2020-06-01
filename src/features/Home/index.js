@@ -2,11 +2,15 @@ import React from "react";
 import styled from "styled-components/macro";
 
 import Nav from 'components/Nav';
+import Screen from './components/Screen';
+import Table from './components/Table';
 
 const Home = ({ className }) => {
   return (
     <div className={className}>
       <Nav />
+      <Screen />
+      <Table />
     </div>
   );
 };
