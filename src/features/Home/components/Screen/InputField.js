@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components/macro";
-import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 import {
   wordSubmit,
@@ -8,35 +7,112 @@ import {
   setCurrenWord,
 } from "features/Home/sentenceSlice";
 
+import Blink from './Blink';
+
+const useComingWord = () => {
+  const coming = useSelector((state) => state.sentence.coming);
+  const currentWord = useSelector((state) => state.sentence.currentWord).split(
+    ""
+  );
+
+  const firstWord = coming[0].split("");
+  const newFirstWord = firstWord.map((item, index) => {
+    if (item === currentWord[index]) {
+      return "";
+    } else {
+      return item;
+    }
+  });
+  const finalComingWord = [newFirstWord.join(""), ...coming.slice(1)].join(" ");
+
+  if (finalComingWord.charAt(0) === " ") {
+    return "&nbsp" + finalComingWord;
+  }
+  return finalComingWord;
+};
+
+const useSubmited = () => {
+  const warning = useSelector((state) => state.sentence.warning);
+  const submited = useSelector((state) => state.sentence.submited).join(
+    "&nbsp"
+  );
+  const currentWord = useSelector((state) => state.sentence.currentWord);
+
+  if (!currentWord) {
+    return submited + "&nbsp";
+  }
+
+  if (warning) {
+    return `${submited}&nbsp<span class="warning">${currentWord}</span>`;
+  } else {
+    return `${submited}&nbsp${currentWord} `;
+  }
+};
+
 const InputField = (props) => {
+  const sentenceRef = useRef();
+
   const { className } = props;
   const [value, setValue] = useState("");
+  const [isFocus, setFocus] = useState(true);
+
+  const upcoming = useComingWord();
+  const submited = useSubmited();
+  console.log({ submited });
 
   const dispatch = useDispatch();
   const sentence = useSelector((state) => state.sentence.coming).join(" ");
+
+  useEffect(() => {
+    sentenceRef.current.focus();
+  }, []);
 
   const handleChange = (e) => {
     const char = e.target.value;
     setValue(char);
     dispatch(checkCurrentWord(char));
-    dispatch(setCurrenWord(char));
+    dispatch(setCurrenWord(char.trim()));
   };
 
   const handleKeyPress = (e) => {
     if (e.key === " ") {
       setValue("");
-      dispatch(wordSubmit());
+      dispatch(wordSubmit(value));
     }
   };
 
+  const handleFocus = () => {
+    setFocus(true)
+  }
+
+  const handleBlur = () => {
+    setFocus(false)
+  }
+
   return (
-    <div className={className}>
+    <div
+      className={className}
+      onClick={() => {
+        sentenceRef.current.focus();
+      }}
+    >
+      {isFocus && <Blink />}
       <input
+        ref={sentenceRef}
         onChange={handleChange}
         onKeyPress={handleKeyPress}
         value={value}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
       />
-      <div className="sentence">{sentence}</div>
+      <div
+        className="sentence right"
+        dangerouslySetInnerHTML={{ __html: submited }}
+      ></div>
+      <div
+        className="sentence"
+        dangerouslySetInnerHTML={{ __html: upcoming }}
+      ></div>
     </div>
   );
 };
@@ -45,12 +121,21 @@ InputField.propTypes = {};
 
 export default styled(InputField)`
   border: 1px solid ${(props) => props.theme.border};
-  width: 80%;
+  width: 90%;
   height: 64px;
   border-radius: 6px;
   margin: 0 auto;
+  cursor: text;
 
   display: flex;
+  position: relative;
+
+  ${Blink} {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%)
+  }
 
   .sentence {
     color: ${(props) => props.theme.title};
@@ -62,23 +147,20 @@ export default styled(InputField)`
     display: flex;
     align-items: center;
 
-    /* mask-image: linear-gradient(90deg, rgba(0, 0, 0, 1.0), rgba(0, 0, 0, 1.0), transparent); */
+    > .warning {
+      color: ${(props) => props.theme.error}
+    }
+
+    &.right {
+      justify-content: flex-end;
+      color: ${(props) => props.theme.secondaryText};
+      mask-image: linear-gradient(-90deg, rgba(0, 0, 0, 1.0), transparent);
+    }
 }
   }
 
   input {
-    text-align: right;
-    height: 100%;
-    width: 50%;
-    background: none;
-    border: none;
-    color: ${(props) => props.theme.primaryText};
-    font-size: 1.5rem;
-    text-transform: uppercase;
-
-    mask-image: linear-gradient(-90deg, rgba(0, 0, 0, 1.0), transparent);
-    &:focus {
-      outline: none;
-    }
+    position: absolute;
+    opacity: 0;
   }
 `;

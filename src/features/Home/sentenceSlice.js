@@ -18,12 +18,15 @@ const sentence = createSlice({
       const firstWord = state.coming[0];
 
       if (state.currentWord.trim() !== firstWord) {
-        console.log({curernt: state.currentWord} );
-        console.log({firstWord})
         state.incorectWords += 1;
       }
-      const word = state.coming.shift();
-      state.submited.push(word);
+      state.coming.shift();
+
+      if (state.currentWord.trim() !== firstWord) {
+        state.submited.push(`<span class="warning">${action.payload}</span>`);
+      } else {
+        state.submited.push(action.payload);
+      }
       state.warning = false;
     },
     setCurrenWord(state, action) {
