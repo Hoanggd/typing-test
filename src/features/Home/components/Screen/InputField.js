@@ -5,9 +5,11 @@ import {
   wordSubmit,
   checkCurrentWord,
   setCurrenWord,
+  changeTimeRemaining,
+  typing
 } from "features/Home/sentenceSlice";
 
-import Blink from './Blink';
+import Blink from "./Blink";
 
 const useComingWord = () => {
   const coming = useSelector((state) => state.sentence.coming);
@@ -58,20 +60,37 @@ const InputField = (props) => {
 
   const upcoming = useComingWord();
   const submited = useSubmited();
-  console.log({ submited });
 
   const dispatch = useDispatch();
   const sentence = useSelector((state) => state.sentence.coming).join(" ");
+  const isTyping = useSelector((state) => state.sentence.isTyping);
+  const timeRemaining = useSelector((state) => state.sentence.timeRemaining);
 
   useEffect(() => {
     sentenceRef.current.focus();
   }, []);
+
+  useEffect(() => {
+    let interval
+    if (isTyping) {
+      interval = setInterval(() => {
+        dispatch(changeTimeRemaining())
+      }, 1000)
+    } else {
+      clearInterval(isTyping);
+    }
+
+    return () => {
+      clearInterval(interval)
+    }
+  }, [isTyping]);
 
   const handleChange = (e) => {
     const char = e.target.value;
     setValue(char);
     dispatch(checkCurrentWord(char));
     dispatch(setCurrenWord(char.trim()));
+    dispatch(typing(true));
   };
 
   const handleKeyPress = (e) => {
@@ -82,12 +101,12 @@ const InputField = (props) => {
   };
 
   const handleFocus = () => {
-    setFocus(true)
-  }
+    setFocus(true);
+  };
 
   const handleBlur = () => {
-    setFocus(false)
-  }
+    setFocus(false);
+  };
 
   return (
     <div

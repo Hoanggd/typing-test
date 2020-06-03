@@ -8,6 +8,8 @@ const initialState = {
   currentWord: "",
   warning: false,
   incorectWords: 0,
+  isTyping: false,
+  timeRemaining: 60,
 };
 
 const sentence = createSlice({
@@ -42,9 +44,21 @@ const sentence = createSlice({
         }
       }
     },
+    changeTimeRemaining(state, action) {
+      state.timeRemaining--
+    },
+    typing(state, action) {
+      state.isTyping = action.payload
+    }
   },
 });
 
-export const { wordSubmit, checkCurrentWord, setCurrenWord } = sentence.actions;
+export const {
+  wordSubmit,
+  checkCurrentWord,
+  setCurrenWord,
+  changeTimeRemaining,
+  typing
+} = sentence.actions;
 
 export default sentence.reducer;
