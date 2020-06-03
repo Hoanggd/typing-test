@@ -12,19 +12,23 @@ const Counter = (props) => {
   const submited = useSelector((state) => state.sentence.submited);
   const dispatch = useDispatch();
 
-  const speed = (submited.length - incorectWords) / (60 - timeRemaining) * 60 || 0;
-  const accuracy = (submited.length - incorectWords) / submited.length * 100 || 0;
+  const speed =
+    ((submited.length - incorectWords) / (60 - timeRemaining)) * 60 || 0;
+  const accuracy =
+    ((submited.length - incorectWords) / submited.length) * 100 || 0;
 
   useEffect(() => {
     if (timeRemaining === 0) {
       dispatch(typing(false));
     }
-  }, [timeRemaining]);
+  }, [timeRemaining, dispatch]);
 
   return (
     <div className={className}>
       <div>
-        <CounterNumber number={Math.round(speed)}>words/min</CounterNumber>
+        <CounterNumber number={speed < 10000 ? Math.round(speed) : 0}>
+          words/min
+        </CounterNumber>
         <CounterNumber number={Math.round(accuracy)}>% acuracy</CounterNumber>
       </div>
       <CounterNumber number={timeRemaining} highLight>

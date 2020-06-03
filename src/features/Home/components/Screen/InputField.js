@@ -62,9 +62,7 @@ const InputField = (props) => {
   const submited = useSubmited();
 
   const dispatch = useDispatch();
-  const sentence = useSelector((state) => state.sentence.coming).join(" ");
   const isTyping = useSelector((state) => state.sentence.isTyping);
-  const timeRemaining = useSelector((state) => state.sentence.timeRemaining);
 
   useEffect(() => {
     sentenceRef.current.focus();
@@ -83,7 +81,7 @@ const InputField = (props) => {
     return () => {
       clearInterval(interval)
     }
-  }, [isTyping]);
+  }, [isTyping, dispatch]);
 
   const handleChange = (e) => {
     const char = e.target.value;
