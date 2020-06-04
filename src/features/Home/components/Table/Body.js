@@ -1,11 +1,25 @@
-import React from 'react'
+import React from "react";
+import BodyItem from "./BodyItem";
 
-const Body = () => {
+import styled from "styled-components/macro";
+
+const Body = (props) => {
+  const { className } = props;
   return (
-    <div>
-      Body
+    <div className={className}>
+      <BodyItem />
+      <BodyItem />
+      <BodyItem />
+      <BodyItem />
+      <BodyItem />
+      <BodyItem />
+      <BodyItem />
     </div>
-  )
-}
+  );
+};
 
-export default Body
+export default styled(Body)`
+  ${BodyItem}:first-child {
+    border: none;
+  }
+`;

@@ -19,5 +19,6 @@ Home.propTypes = {};
 
 export default styled(Home)`
   background-color: ${props => props.theme.background};
-  height: 100vh;
+  height: 100%;
+  padding-bottom: 48px;
 `;

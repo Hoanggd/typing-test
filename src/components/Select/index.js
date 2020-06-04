@@ -5,6 +5,7 @@ import classNames from "classnames";
 
 import useOnClickOutside from 'hooks/clickOutSide';
 
+
 const Select = (props) => {
   const { listItem, className, onClick } = props;
   const [option, setOption] = useState(props.listItem[0]);
@@ -37,9 +38,9 @@ const Select = (props) => {
 };
 
 Select.propTypes = {
-  label: PropTypes.string,
   listItem: PropTypes.array,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  fontSize: PropTypes.string
 };
 
 Select.defaultProps = {
@@ -49,6 +50,8 @@ Select.defaultProps = {
 
 export default styled(Select)`
   position: relative;
+
+  font-size: ${props => props.fontSize};
 
   &:hover button {
     border: 1px solid ${(props) => props.theme.primary};

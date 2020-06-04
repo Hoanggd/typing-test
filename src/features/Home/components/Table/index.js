@@ -22,4 +22,5 @@ export default styled(Table)`
   width: 90%;
   margin: 0 auto;
   border-radius: 20px;
+  padding: 1% 5%;
 `;
