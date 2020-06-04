@@ -1,18 +1,28 @@
-import React from 'react';
-import InputField from './InputField';
-import InputFooter from './InputFooter';
+import React, { useEffect } from "react";
+import InputField from "./InputField";
+import InputFooter from "./InputFooter";
+import { useDispatch } from "react-redux";
+import styled from 'styled-components/macro'
 
-const Input = props => {
+import { addComingWord } from "features/Home/sentenceSlice";
+
+const Input = ({className}) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(addComingWord())
+  }, [dispatch]);
   return (
-    <div>
+    <div className={className}>
       <InputField />
       <InputFooter />
     </div>
-  )
-}
+  );
+};
 
-Input.propTypes = {
+Input.propTypes = {};
 
-}
-
-export default Input
+export default styled(Input)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;

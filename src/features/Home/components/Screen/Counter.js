@@ -31,8 +31,8 @@ const Counter = (props) => {
         </CounterNumber>
         <CounterNumber number={Math.round(accuracy)}>% acuracy</CounterNumber>
       </div>
-      <CounterNumber number={timeRemaining} highLight>
-        sec
+      <CounterNumber number={timeRemaining || "TIME OVER"} highLight>
+        {timeRemaining ? "sec" : ""}
       </CounterNumber>
     </div>
   );
@@ -47,7 +47,7 @@ export default styled(Counter)`
   > div:first-child {
     display: flex;
     justify-content: center;
-    align-self: flex-end;
+    align-items: flex-end;
 
     > ${CounterNumber} {
       margin: 0 30px;
@@ -55,6 +55,6 @@ export default styled(Counter)`
   }
 
   > div:last-child {
-    margin-top: 12px;
+    margin-top: 20px;
   }
 `;

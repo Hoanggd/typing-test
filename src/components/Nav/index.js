@@ -37,6 +37,7 @@ export default styled(Nav)`
   align-items: center;
   justify-content: space-between;
 
+  width: 90%;
   max-width: 1200px;
   margin: 0 auto 24px ;
   height: 72px;

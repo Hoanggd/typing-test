@@ -15,7 +15,10 @@ const CounterNumber = props => {
 }
 
 CounterNumber.propTypes = {
-  number: PropTypes.number.isRequired,
+  number: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]),
   children: PropTypes.string.isRequired,
   hightLight: PropTypes.bool
 }

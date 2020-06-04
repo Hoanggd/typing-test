@@ -8,6 +8,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "babel-plugin-macros": "^2.8.0",
+    "classnames": "^2.2.6",
     "faker": "^4.1.0",
     "normalize.css": "^8.0.1",
     "prop-types": "^15.7.2",

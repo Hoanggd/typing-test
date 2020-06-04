@@ -6,7 +6,7 @@ import {
   checkCurrentWord,
   setCurrenWord,
   changeTimeRemaining,
-  typing
+  typing,
 } from "features/Home/sentenceSlice";
 
 import Blink from "./Blink";
@@ -55,7 +55,6 @@ const InputField = (props) => {
   const sentenceRef = useRef();
 
   const { className } = props;
-  const [value, setValue] = useState("");
   const [isFocus, setFocus] = useState(true);
 
   const upcoming = useComingWord();
@@ -63,38 +62,43 @@ const InputField = (props) => {
 
   const dispatch = useDispatch();
   const isTyping = useSelector((state) => state.sentence.isTyping);
+  const timeRemaining = useSelector((state) => state.sentence.timeRemaining);
+  const value = useSelector((state) => state.sentence.currentWord);
 
   useEffect(() => {
     sentenceRef.current.focus();
-  }, []);
+  }, [upcoming]);
 
   useEffect(() => {
-    let interval
+    let interval;
     if (isTyping) {
       interval = setInterval(() => {
-        dispatch(changeTimeRemaining())
-      }, 1000)
+        dispatch(changeTimeRemaining());
+      }, 1000);
     } else {
       clearInterval(isTyping);
     }
 
     return () => {
-      clearInterval(interval)
-    }
+      clearInterval(interval);
+    };
   }, [isTyping, dispatch]);
 
   const handleChange = (e) => {
     const char = e.target.value;
-    setValue(char);
-    dispatch(checkCurrentWord(char));
-    dispatch(setCurrenWord(char.trim()));
-    dispatch(typing(true));
+    if (timeRemaining > 0) {
+      dispatch(checkCurrentWord(char));
+      dispatch(setCurrenWord(char.trim()));
+      dispatch(typing(true));
+    }
   };
 
   const handleKeyPress = (e) => {
     if (e.key === " ") {
-      setValue("");
-      dispatch(wordSubmit(value));
+      if (timeRemaining > 0) {
+        dispatch(wordSubmit(value));
+      }
+      dispatch(setCurrenWord(""));
     }
   };
 
@@ -113,7 +117,7 @@ const InputField = (props) => {
         sentenceRef.current.focus();
       }}
     >
-      {isFocus && <Blink />}
+      {isFocus && timeRemaining > 0 && <Blink />}
       <input
         ref={sentenceRef}
         onChange={handleChange}
@@ -122,14 +126,12 @@ const InputField = (props) => {
         onFocus={handleFocus}
         onBlur={handleBlur}
       />
-      <div
-        className="sentence right"
-        dangerouslySetInnerHTML={{ __html: submited }}
-      ></div>
-      <div
-        className="sentence"
-        dangerouslySetInnerHTML={{ __html: upcoming }}
-      ></div>
+      <div className="sentence left">
+        <p dangerouslySetInnerHTML={{ __html: submited }}></p>
+      </div>
+      <div className="sentence">
+        <p dangerouslySetInnerHTML={{ __html: upcoming }}></p>
+      </div>
     </div>
   );
 };
@@ -141,17 +143,17 @@ export default styled(InputField)`
   width: 90%;
   height: 64px;
   border-radius: 6px;
-  margin: 0 auto;
   cursor: text;
 
   display: flex;
   position: relative;
+  margin: 0 0 16px;
 
   ${Blink} {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%)
+    transform: translate(-50%, -50%);
   }
 
   .sentence {
@@ -159,19 +161,26 @@ export default styled(InputField)`
     text-transform: uppercase;
     font-size: 1.5rem;
     width: 50%;
-    white-space: nowrap;
     overflow: hidden;
     display: flex;
     align-items: center;
+    position: relative;
 
-    > .warning {
+    mask-image: linear-gradient(90deg, rgba(0, 0, 0, 1.0),rgba(0, 0, 0, .7), transparent);
+
+    > p {
+      white-space: nowrap;
+      position: absolute;
+    }
+
+    .warning {
       color: ${(props) => props.theme.error}
     }
 
-    &.right {
+    &.left {
       justify-content: flex-end;
       color: ${(props) => props.theme.secondaryText};
-      mask-image: linear-gradient(-90deg, rgba(0, 0, 0, 1.0), transparent);
+      mask-image: linear-gradient(-90deg, rgba(0, 0, 0, 1.0), rgba(0, 0, 0, .7), transparent);
     }
 }
   }

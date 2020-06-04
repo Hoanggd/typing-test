@@ -3,6 +3,9 @@ import { ThemeProvider } from "styled-components/macro";
 import { useSelector } from "react-redux";
 
 const theme = {
+  common: {
+    boxShadow: "0 18px 24px rgba(0,0,0,.2)",
+  },
   dark: {
     primary: "#1765AD",
     primaryLighten: "#3C9AE8",
@@ -40,7 +43,9 @@ const theme = {
 const Theme = ({ children }) => {
   const darkMode = useSelector((state) => state.darkMode);
   return (
-    <ThemeProvider theme={theme[darkMode ? "dark" : "light"]}>
+    <ThemeProvider
+      theme={{ ...theme[darkMode ? "dark" : "light"], ...theme.common }}
+    >
       {children}
     </ThemeProvider>
   );

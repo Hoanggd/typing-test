@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 
 export const LinkOutline =  styled(Link)`
   color: ${props => props.theme.primaryLighten};
-  /* padding: 12px 24px; */
   border: 1px solid ${props => props.theme.primaryLighten};
   border-radius: 100px;
   text-decoration: none;
@@ -17,6 +16,28 @@ export const LinkOutline =  styled(Link)`
 
   &:hover {
     background-color: ${props => props.theme.divider};
+  }
+`
+
+export const ReloadBtn = styled.button`
+  background: ${props => props.theme.primary};
+  width: 48px;
+  height: 48px;
+  border-radius: 6px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  transition: .1s ease-in-out;
+
+  :focus {
+    outline: none;
+  }
+
+  :hover {
+    background: ${props => props.theme.primaryLighten}
   }
 `
 

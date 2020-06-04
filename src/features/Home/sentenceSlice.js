@@ -1,9 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+import faker from "faker";
 
 const initialState = {
-  coming: "his son quipped that power bars were nothing more than adult candy bars".split(
-    " "
-  ),
+  coming: [""],
   submited: [],
   currentWord: "",
   warning: false,
@@ -16,6 +15,28 @@ const sentence = createSlice({
   name: "sentence",
   initialState,
   reducers: {
+    resetState(state, action) {
+      return {
+        coming: [""],
+        submited: [],
+        currentWord: "",
+        warning: false,
+        incorectWords: 0,
+        isTyping: false,
+        timeRemaining: 60,
+      };
+    },
+    addComingWord(state, action) {
+      let sentence = [];
+
+      for (let i = 0; sentence.length < 100; i++) {
+        const word = faker.random.word();
+        if (/^[a-zA-Z]{4,10}$/.test(word)) {
+          sentence.push(word.toLowerCase());
+        }
+      }
+      state.coming = sentence;
+    },
     wordSubmit(state, action) {
       const firstWord = state.coming[0];
 
@@ -32,10 +53,10 @@ const sentence = createSlice({
       state.warning = false;
     },
     setCurrenWord(state, action) {
-      state.currentWord = action.payload;
+      state.currentWord = action.payload.toLowerCase();
     },
     checkCurrentWord(state, action) {
-      const value = action.payload.trim();
+      const value = action.payload.trim().toLowerCase();
       if (value) {
         if (state.coming[0].indexOf(value) === 0) {
           state.warning = false;
@@ -45,11 +66,11 @@ const sentence = createSlice({
       }
     },
     changeTimeRemaining(state, action) {
-      state.timeRemaining--
+      state.timeRemaining--;
     },
     typing(state, action) {
-      state.isTyping = action.payload
-    }
+      state.isTyping = action.payload;
+    },
   },
 });
 
@@ -58,7 +79,9 @@ export const {
   checkCurrentWord,
   setCurrenWord,
   changeTimeRemaining,
-  typing
+  typing,
+  addComingWord,
+  resetState,
 } = sentence.actions;
 
 export default sentence.reducer;
