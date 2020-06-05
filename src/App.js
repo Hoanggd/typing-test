@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components/macro";
 
 import Home from "features/Home";
+import Login from "features/Auth/Login";
 import Theme from "Theme";
 
 function App(props) {
@@ -9,6 +10,7 @@ function App(props) {
   return (
     <Theme>
       <div className={className} >
+        <Login />
         <Home />
       </div>
     </Theme>
@@ -16,5 +18,5 @@ function App(props) {
 }
 
 export default styled(App)`
-  
+  position: relative;
 `;
