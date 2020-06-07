@@ -68,5 +68,5 @@ export const Body2 = styled.p`
 export const Caption = styled.p`
   font-size: .75rem;
   letter-spacing: 0.4px;
-  color: ${props => props.theme.secondaryText};
+  color: ${props => props.theme.primaryText};
 `

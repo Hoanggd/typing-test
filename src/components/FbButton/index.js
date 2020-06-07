@@ -15,14 +15,21 @@ const FbButton = (props) => {
 export default styled(FbButton)`
   background: ${({theme}) => theme.facebook};
   border: none;
+  border-radius: 6px;
+  padding: 12px 12px;
 
-  color: ${({theme}) => theme.primaryText};
+  display: flex;
+  justify-content: center;
+
+  color: rgba(255, 255, 255, .85);
   
   display: flex;
   align-items: center;
 
   svg {
     margin-right: 6px;
-    opacity: .65;
+    opacity: .85;
   }
+
+  cursor: pointer;
 `;
