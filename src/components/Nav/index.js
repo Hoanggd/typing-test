@@ -16,11 +16,11 @@ const Nav = (props) => {
         <Logo />
       </Link>
       <div className="link-wrapper">
-        <ul className="nav-link">
-          <Link to="/">Home</Link>
-          <Link to="/faq">FAQ</Link>
-          <Link to="/graph">Graph</Link>
-        </ul>
+        {/* <ul className="nav-link"> */}
+          {/* <Link to="/">Home</Link> */}
+          {/* <Link to="/faq">FAQ</Link> */}
+          {/* <Link to="/graph">Graph</Link> */}
+        {/* </ul> */}
         <LinkOutline className="login" to="/login">
           Login
         </LinkOutline>
