@@ -2,20 +2,16 @@ import React from "react";
 import styled from "styled-components/macro";
 import { ReactComponent as FbIcon } from "assets/images/fb-icon.svg";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
-import axios from 'axios';
-import config from '../../config';
+import { useDispatch } from "react-redux";
+
+import { fetchFbUser } from "../../userSlice";
 
 const FbButton = (props) => {
   const { className } = props;
+  const dispatch = useDispatch();
 
   const responseFacebook = async (response) => {
-    const serverResponse = await axios({
-      method: 'post',
-      baseURL: config.base_url,
-      url: "/login/facebook",
-      data: response,
-    })
-    console.log(serverResponse.data);
+    dispatch(fetchFbUser(response));
   };
 
   return (

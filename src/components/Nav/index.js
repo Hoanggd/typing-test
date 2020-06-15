@@ -6,9 +6,11 @@ import { useSelector } from "react-redux";
 import { ReactComponent as Logo } from "assets/images/logo.svg";
 import { LinkOutline } from "components/Button";
 import DarkToggle from "components/DarkToggle";
+import User from "./User";
 
 const Nav = (props) => {
   const darkMode = useSelector((state) => state.darkMode);
+  const user = useSelector((state) => state.user);
   const { className } = props;
   return (
     <div className={className}>
@@ -16,14 +18,13 @@ const Nav = (props) => {
         <Logo />
       </Link>
       <div className="link-wrapper">
-        {/* <ul className="nav-link"> */}
-          {/* <Link to="/">Home</Link> */}
-          {/* <Link to="/faq">FAQ</Link> */}
-          {/* <Link to="/graph">Graph</Link> */}
-        {/* </ul> */}
-        <LinkOutline className="login" to="/login">
-          Login
-        </LinkOutline>
+        {user.name ? (
+          <User />
+        ) : (
+          <LinkOutline className="login" to="/login">
+            Login
+          </LinkOutline>
+        )}
         <DarkToggle isDark={darkMode} />
       </div>
     </div>
@@ -39,7 +40,7 @@ export default styled(Nav)`
 
   width: 90%;
   max-width: 1200px;
-  margin: 0 auto 24px ;
+  margin: 0 auto 24px;
   height: 72px;
 
   .link-wrapper {

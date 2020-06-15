@@ -1,11 +1,20 @@
 import React from "react";
-import { Switch, Route, useRouteMatch } from "react-router-dom";
+import {
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import Login from "./Login";
 import Register from "./Register";
 
 const Auth = () => {
-  return (
+  const user = useSelector((state) => state.user);
+
+  return user.name ? (
+    <Redirect to={{pathname: '/'}} />
+  ) : (
     <Switch>
       <Route path="/login">
         <Login />

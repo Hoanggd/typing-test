@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components/macro";
-import {useHistory} from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 
 import { H6, Body2 } from "components/Typography";
-import FbButton from "components/FbButton";
+import FbButton from "../components/FbButton";
 import Input from "components/Input";
 import CloseBtn from "../components/CloseBtn";
 import Button from "components/Button";
@@ -13,8 +13,8 @@ const Login = (props) => {
   const { className } = props;
   const history = useHistory();
   return (
-    <div className={className} onClick={() => history.push('/')}>
-      <div className="container" onClick={(e) => e.stopPropagation() }>
+    <div className={className} onClick={() => history.push("/")}>
+      <div className="container" onClick={(e) => e.stopPropagation()}>
         <CloseBtn className="close-btn" />
         <H6>Log in</H6>
         <FbButton />
@@ -100,6 +100,5 @@ export default styled(Login)`
       width: 100%;
       margin-bottom: ${marginBottom};
     }
-
   }
 `;

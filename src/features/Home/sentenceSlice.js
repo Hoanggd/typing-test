@@ -1,5 +1,20 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import faker from "faker";
+import axios from 'axios';
+import config from 'config';
+
+export const sendResult = createAsyncThunk(
+  'sentence/sendResult',
+  async ({wpm, token}) => {
+    axios({
+      method: 'post',
+      baseURL: config.base_url,
+      url: '/result/create',
+      data: {wpm},
+      headers: { Authorization: "Bearer " + token }
+    })
+  }
+)
 
 const initialState = {
   coming: [""],

@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { typing } from "features/Home/sentenceSlice";
 
 import CounterNumber from "./CounterNumber";
+import { sendResult } from "features/Home/sentenceSlice";
 
 const Counter = (props) => {
   const { className } = props;
@@ -19,6 +20,10 @@ const Counter = (props) => {
 
   useEffect(() => {
     if (timeRemaining === 0) {
+      const token = localStorage.getItem("token");
+      if (token) {
+        dispatch(sendResult({ wpm: speed, token }));
+      }
       dispatch(typing(false));
     }
   }, [timeRemaining, dispatch]);
