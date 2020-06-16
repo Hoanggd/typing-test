@@ -1,26 +1,38 @@
 import React from "react";
 import styled from "styled-components/macro";
+import PropTypes from "prop-types";
+import moment from 'moment';
 
 import { Subtitle2 } from "components/Typography";
 
 const BodyItem = (props) => {
-  const { className } = props;
+  const { className, wpm, time, name } = props;
+
+  const formatTime = () => {
+    return moment(time).fromNow();
+  }
   return (
     <div className={className}>
-      <div className="avatar">
-      </div>
+      <div className="avatar"></div>
       <div>
-        <Subtitle2>Pham Dinh Hoang</Subtitle2>
+        <Subtitle2>{name}</Subtitle2>
       </div>
       <div className="score">
         <div>
-          <span>197</span>
+          <span>{wpm}</span>
           <span>WPM</span>
         </div>
       </div>
-      <div>an hour ago</div>
+      <div>{formatTime()}</div>
     </div>
   );
+};
+
+BodyItem.propTypes = {
+  name: PropTypes.string,
+  wpm: PropTypes.number,
+  time: PropTypes.string,
+  photoUrl: PropTypes.string,
 };
 
 export default styled(BodyItem)`
@@ -32,7 +44,7 @@ export default styled(BodyItem)`
   color: ${(props) => props.theme.primaryText};
   font-size: 0.875rem;
 
-  border-top: 1px solid ${props => props.theme.border};
+  border-top: 1px solid ${(props) => props.theme.border};
 
   .avatar {
     width: 40px;
@@ -42,7 +54,7 @@ export default styled(BodyItem)`
 
     justify-self: flex-end;
 
-    background: url(https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg);
+    background: url(${(props) => props.photoUrl});
     background-size: cover;
     background-position: center;
   }

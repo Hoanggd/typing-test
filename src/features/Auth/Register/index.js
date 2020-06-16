@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components/macro";
 import { useHistory } from "react-router-dom";
+import axios from 'axios';
+import config from 'config';
 
 import { H6, Body2 } from "components/Typography";
 import FbButton from "components/FbButton";
@@ -11,15 +13,51 @@ import CloseBtn from "../components/CloseBtn";
 
 const Register = (props) => {
   const { className } = props;
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const history = useHistory();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const response = await axios({
+      method: 'post',
+      baseURL: config.base_url,
+      url: '/register',
+      data: {name, email, password}
+    })
+    const data = response.data;
+
+    if (data.error) {
+      setError(data.error.message)
+    }
+  }
+
   return (
     <div className={className} onClick={() => history.push("/")}>
       <div className="container" onClick={(e) => e.stopPropagation()}>
         <CloseBtn className="close-btn" />
         <H6>Register</H6>
-        <form>
-          <Input placeholder="Email" />
-          <Input placeholder="Password" type="password" />
+        <form onSubmit={handleSubmit}>
+          <Input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Full Name"
+            type="text"
+          />
+          <Input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+          />
+          <Input
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            type="password"
+          />
+          <p className="error">&#160;{error}&#160;</p>
           <Button>Register</Button>
         </form>
         <Body2 className="footer">
@@ -38,6 +76,13 @@ export default styled(Register)`
   width: 100%;
   height: 100%;
   z-index: 2;
+
+  .error {
+    color: ${({theme}) => theme.secondary};
+    margin-bottom: 12px;
+    text-align: center;
+    font-size: 0.875rem;
+  }
 
   .close-btn {
     position: absolute;

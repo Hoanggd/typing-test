@@ -19,13 +19,15 @@ const Counter = (props) => {
     ((submited.length - incorectWords) / submited.length) * 100 || 0;
 
   useEffect(() => {
-    if (timeRemaining === 0) {
-      const token = localStorage.getItem("token");
-      if (token) {
-        dispatch(sendResult({ wpm: speed, token }));
+    (async () => {
+      if (timeRemaining === 0) {
+        const token = localStorage.getItem("token");
+        if (token) {
+          dispatch(sendResult({ wpm: speed, token }));
+        }
+        dispatch(typing(false));
       }
-      dispatch(typing(false));
-    }
+    })();
   }, [timeRemaining, dispatch]);
 
   return (

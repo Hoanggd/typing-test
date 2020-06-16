@@ -31,6 +31,7 @@ export const fetchUserByToken = createAsyncThunk(
 const initialState = {
   name: "",
   photoUrl: "",
+  _id: ""
 };
 
 const user = createSlice({
@@ -49,8 +50,8 @@ const user = createSlice({
       return { name, photoUrl };
     },
     [fetchUserByToken.fulfilled]: (state, action) => {
-      const { name, photoUrl } = action.payload;
-      return { name, photoUrl };
+      const { name, photoUrl, _id } = action.payload;
+      return { name, photoUrl, _id };
     },
   },
 });
