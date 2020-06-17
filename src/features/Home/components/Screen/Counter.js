@@ -28,7 +28,7 @@ const Counter = (props) => {
         dispatch(typing(false));
       }
     })();
-  }, [timeRemaining, dispatch]);
+  }, [timeRemaining, dispatch, speed]);
 
   return (
     <div className={className}>

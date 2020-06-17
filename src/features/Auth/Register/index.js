@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components/macro";
 import { useHistory } from "react-router-dom";
-import axios from 'axios';
-import config from 'config';
+import { useDispatch } from "react-redux";
+
+import axios from "axios";
+import config from "config";
 
 import { H6, Body2 } from "components/Typography";
 import FbButton from "components/FbButton";
@@ -11,6 +13,8 @@ import Button from "components/Button";
 import Link from "components/Link";
 import CloseBtn from "../components/CloseBtn";
 
+import { setUser } from "features/Auth/userSlice";
+
 const Register = (props) => {
   const { className } = props;
   const [name, setName] = useState("");
@@ -18,21 +22,32 @@ const Register = (props) => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await axios({
-      method: 'post',
+      method: "post",
       baseURL: config.base_url,
-      url: '/register',
-      data: {name, email, password}
-    })
+      url: "/register",
+      data: { name, email, password },
+    });
     const data = response.data;
-
     if (data.error) {
-      setError(data.error.message)
+      setError(data.error.message);
+    } else {
+      localStorage.setItem("token", data.user.token);
+      const userData = {
+        ...data.user
+      }
+      dispatch(setUser({
+        name: userData.name,
+        photoUrl: userData.photoUrl,
+        _id: userData._id
+      }))
+      history.push("/");
     }
-  }
+  };
 
   return (
     <div className={className} onClick={() => history.push("/")}>
@@ -78,7 +93,7 @@ export default styled(Register)`
   z-index: 2;
 
   .error {
-    color: ${({theme}) => theme.secondary};
+    color: ${({ theme }) => theme.secondary};
     margin-bottom: 12px;
     text-align: center;
     font-size: 0.875rem;

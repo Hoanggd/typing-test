@@ -11,19 +11,20 @@ const Table = (props) => {
   const { className } = props;
 
   const results = useSelector((state) => state.results);
+  const value = useSelector(state => state.results.value);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchResults());
-  }, [dispatch]);
+  }, [dispatch, value]);
 
   return (
     <div className={className}>
       <Header />
-      {results.length ? (
-        <Body results={results} />
+      {results.data.length ? (
+        <Body results={results.data} />
       ) : (
-        <Subtitle2 class="warning">You need to login to view history</Subtitle2>
+        <Subtitle2 className="warning">You need to login to view history</Subtitle2>
       )}
     </div>
   );

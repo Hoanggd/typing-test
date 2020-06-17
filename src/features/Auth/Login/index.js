@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components/macro";
 import { useHistory } from "react-router-dom";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import config from "config";
 
 import { H6, Body2 } from "components/Typography";
 import FbButton from "../components/FbButton";
@@ -9,9 +12,43 @@ import CloseBtn from "../components/CloseBtn";
 import Button from "components/Button";
 import Link from "components/Link";
 
+import { setUser } from "features/Auth/userSlice";
+
 const Login = (props) => {
   const { className } = props;
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
   const history = useHistory();
+  const dispatch = useDispatch();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const response = await axios({
+      method: "post",
+      baseURL: config.base_url,
+      url: "/login",
+      data: { email, password },
+    });
+    const data = response.data;
+    if (data.error) {
+      setError(data.error.message);
+    } else {
+      localStorage.setItem("token", data.user.token);
+      const userData = {
+        ...data.user,
+      };
+      dispatch(
+        setUser({
+          name: userData.name,
+          photoUrl: userData.photoUrl,
+          _id: userData._id,
+        })
+      );
+      history.push("/");
+    }
+  };
   return (
     <div className={className} onClick={() => history.push("/")}>
       <div className="container" onClick={(e) => e.stopPropagation()}>
@@ -19,12 +56,26 @@ const Login = (props) => {
         <H6>Log in</H6>
         <FbButton />
         <Body2 className="caption">or login with</Body2>
-        <form>
-          <Input placeholder="Email" />
-          <Input placeholder="Password" type="password" />
-          <a className="forgot" href="#">
+        <form onSubmit={handleSubmit}>
+          <Input
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+            placeholder="Email"
+          />
+          <Input
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+            placeholder="Password"
+            type="password"
+          />
+          {/* <a className="forgot" href="#">
             Forgot password ?
-          </a>
+          </a> */}
+          <p className="error">&#160;{error}&#160;</p>
           <Button>Log in</Button>
         </form>
         <Body2 className="footer">
@@ -43,6 +94,13 @@ export default styled(Login)`
   width: 100%;
   height: 100%;
   z-index: 2;
+
+  .error {
+    color: ${({ theme }) => theme.secondary};
+    margin-bottom: 12px;
+    text-align: center;
+    font-size: 0.875rem;
+  }
 
   .container {
     background: ${({ theme }) => theme.divider};
@@ -89,7 +147,7 @@ export default styled(Login)`
       text-align: right;
       width: 100%;
       display: inline-block;
-      margin-bottom: ${marginBottom};
+      margin-bottom: 12px;
 
       :hover {
         text-decoration: underline;

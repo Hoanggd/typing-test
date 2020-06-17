@@ -14,7 +14,8 @@ const User = ({ className }) => {
     localStorage.removeItem("token");
     dispatch(setUser({
       name: '',
-      photoUrl: ''
+      photoUrl: '',
+      _id: ''
     }))
   }
 

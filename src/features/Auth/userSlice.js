@@ -38,8 +38,8 @@ const user = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setUser: (state, { name, photoUrl }) => {
-      return { name, photoUrl };
+    setUser: (state, action) => {
+      return action.payload;
     },
   },
   extraReducers: {

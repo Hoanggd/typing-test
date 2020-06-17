@@ -19,7 +19,7 @@ const InputFooter = ({className}) => {
 
   return (
     <div className={className}>
-      <Select width="108px" height="48px" onClick={(value) => console.log(value)} />
+      {/* <Select width="108px" height="48px" onClick={(value) => console.log(value)} /> */}
       <ReloadBtn onClick = {handleReload}>
         <ReloadImage />
       </ReloadBtn>

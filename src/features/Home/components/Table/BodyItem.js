@@ -37,7 +37,7 @@ BodyItem.propTypes = {
 
 export default styled(BodyItem)`
   display: grid;
-  grid-template-columns: 1fr 5fr 4fr 2fr;
+  grid-template-columns: 1fr 5fr 4fr 3fr;
   gap: 0 12px;
   padding: 16px 0;
   align-items: center;

@@ -36,18 +36,21 @@ export const fetchResultsById = createAsyncThunk(
 
 const results = createSlice({
   name: "results",
-  initialState: [],
+  initialState: {
+    data: [],
+    value: 0
+  },
   reducers: {
     setResults: (state, action) => {
-      return action.payload;
+      state.data = action.payload;
     },
   },
   extraReducers: {
     [fetchResults.fulfilled]: (state, action) => {
-      return action.payload;
+      state.data = action.payload;
     },
     [fetchResultsById.fulfilled]: (state, action) => {
-      return action.payload;
+      state.data = action.payload;
     },
   },
 });
