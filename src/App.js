@@ -34,5 +34,5 @@ function App(props) {
 
 export default styled(App)`
   position: relative;
-  height: 100vh;
+  height: 100%;
 `;
