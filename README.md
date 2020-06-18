@@ -3,7 +3,7 @@
 ## Công nghệ sử dụng:
 #### Frontend:
 - Reactjs, Redux, Redux-toolkit
-- Styled-Component Macro
+- Styled-Component + Babel Macro
 #### Backend:
 - Nodejs, ExpressJs
 - DB: MongoDB, MongoDB Atlas

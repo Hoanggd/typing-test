@@ -44,7 +44,7 @@ const sentence = createSlice({
     addComingWord(state, action) {
       let sentence = [];
 
-      for (let i = 0; sentence.length < 100; i++) {
+      for (let i = 0; sentence.length < 200; i++) {
         const word = faker.random.word();
         if (/^[a-zA-Z]{4,10}$/.test(word)) {
           sentence.push(word.toLowerCase());
