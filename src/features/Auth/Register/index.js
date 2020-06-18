@@ -92,6 +92,10 @@ export default styled(Register)`
   height: 100%;
   z-index: 2;
 
+  form {
+    width: 100%;
+  }
+
   .error {
     color: ${({ theme }) => theme.secondary};
     margin-bottom: 12px;

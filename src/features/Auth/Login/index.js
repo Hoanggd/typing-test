@@ -95,6 +95,10 @@ export default styled(Login)`
   height: 100%;
   z-index: 2;
 
+  form {
+    width: 100%;
+  }
+
   .error {
     color: ${({ theme }) => theme.secondary};
     margin-bottom: 12px;
@@ -110,7 +114,7 @@ export default styled(Login)`
     left: 50%;
     top: 50vh;
     transform: translate(-50%, -50%);
-    padding: 7% 7%;
+    padding: calc(24px + 1%);
 
     border-radius: 6px;
     box-shadow: ${({ theme }) => theme.boxShadow};
