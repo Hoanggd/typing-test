@@ -118,7 +118,7 @@ export default styled(Register)`
     left: 50%;
     top: 50vh;
     transform: translate(-50%, -50%);
-    padding: 7% 7%;
+    padding: calc(24px + 1%);
 
     border-radius: 6px;
     box-shadow: ${({ theme }) => theme.boxShadow};
