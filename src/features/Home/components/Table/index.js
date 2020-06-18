@@ -39,7 +39,6 @@ export default styled(Table)`
   margin: 0 auto;
   border-radius: 20px;
   padding: 1% 5%;
-  min-height: 350px;
 
   > ${Subtitle2} {
     margin-top: 12px;
